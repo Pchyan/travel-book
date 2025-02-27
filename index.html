@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電子旅遊書</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>電子旅遊書</h1>
+    </header>
+    <main>
+        <div class="button-container">
+            <button id="create-plan">建立旅遊計劃</button>
+            <button id="view-info">查看旅遊資訊</button>
+            <button id="export-plans">匯出計劃</button>
+            <button id="import-plans">匯入計劃</button>
+        </div>
+        <div id="plan-form" style="display: none;">
+            <h2>建立旅遊計劃</h2>
+            <form>
+                <label for="plan-name">計劃名稱:</label>
+                <input type="text" id="plan-name" required placeholder="輸入計劃名稱">
+                
+                <label for="plan-date">出發日期:</label>
+                <input type="date" id="plan-date" required>
+                
+                <label for="plan-duration">旅程天數:</label>
+                <input type="number" id="plan-duration" required min="1" placeholder="輸入天數">
+                
+                <label for="plan-destination">目的地:</label>
+                <input type="text" id="plan-destination" required placeholder="輸入目的地">
+                
+                <label for="plan-budget">預算 (TWD):</label>
+                <input type="number" id="plan-budget" required min="0" placeholder="輸入預算金額">
+                
+                <label for="plan-notes">備註:</label>
+                <textarea id="plan-notes" rows="4" placeholder="輸入其他備註事項"></textarea>
+                
+                <label for="plan-photos">旅遊照片:</label>
+                <input type="file" id="plan-photos" accept="image/*" multiple>
+                <div class="plan-photo-preview"></div>
+                
+                <div class="button-group">
+                    <button id="save-plan">儲存計劃</button>
+                    <button id="cancel-plan">取消</button>
+                </div>
+            </form>
+        </div>
+        <div id="info-container" style="display: none;">
+            <h2>旅遊計劃資訊</h2>
+            <div class="info-controls">
+                <button id="sort-by-date">依日期排序</button>
+                <button id="sort-by-name">依名稱排序</button>
+                <button id="view-list" class="active">列表視圖</button>
+                <button id="view-grid">網格視圖</button>
+            </div>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="搜尋旅遊計劃..." />
+            </div>
+            <ul id="plan-list"></ul>
+        </div>
+        <div id="edit-plan" style="display: none;">
+            <div class="edit-header">
+                <h2>編輯旅遊計劃</h2>
+                <div class="edit-controls">
+                    <button id="save-edit">儲存</button>
+                    <button id="cancel-edit">取消</button>
+                </div>
+            </div>
+            <div class="edit-content">
+                <div class="edit-basic-info">
+                    <label for="edit-name">計劃名稱:</label>
+                    <input type="text" id="edit-name" required>
+                    
+                    <label for="edit-date">出發日期:</label>
+                    <input type="date" id="edit-date" required>
+                    
+                    <label for="edit-duration">旅程天數:</label>
+                    <input type="number" id="edit-duration" required min="1">
+                    
+                    <label for="edit-destination">目的地:</label>
+                    <input type="text" id="edit-destination" required>
+                    
+                    <label for="edit-budget">預算 (TWD):</label>
+                    <input type="number" id="edit-budget" required min="0">
+                    
+                    <label for="edit-map">Google Map 嵌入連結:</label>
+                    <input type="text" id="edit-map" placeholder="輸入 Google Map 嵌入連結" title="請使用 Google Maps 的嵌入代碼，點擊分享，然後選擇嵌入地圖。">
+                    <span class="tooltip">請使用 Google Maps 的嵌入代碼，點擊分享，然後選擇嵌入地圖、複製HTML。</span>
+                </div>
+                
+                <div class="edit-blog">
+                    <div class="editor-toolbar">
+                        <button type="button" data-command="bold" title="粗體">B</button>
+                        <button type="button" data-command="italic" title="斜體">I</button>
+                        <button type="button" data-command="underline" title="底線">U</button>
+                        <button type="button" data-command="createLink" title="插入連結">🔗</button>
+                        <button type="button" data-command="justifyLeft" title="靠左對齊">⬅️</button>
+                        <button type="button" data-command="justifyCenter" title="置中">⬆️</button>
+                        <button type="button" data-command="justifyRight" title="靠右對齊">➡️</button>
+                    </div>
+                    <div id="editor" contenteditable="true" class="edit-content-area">
+                        <p>開始寫下您的旅遊記事...</p>
+                    </div>
+                </div>
+                
+                <div class="edit-insert-photos">
+                    <label>插入照片:</label>
+                    <div class="insert-photo-grid">
+                    </div>
+                </div>
+
+                <div class="edit-photos">
+                    <label for="edit-photos">添加照片:</label>
+                    <input type="file" id="edit-photos" accept="image/*" multiple>
+                    <div class="edit-photo-preview"></div>
+                </div>
+            </div>
+        </div>
+        <div id="view-plan-container" style="display: none;">
+            <!-- 瀏覽模式的內容將在這裡顯示 -->
+        </div>
+    </main>
+    <footer>
+        <p>© 2023 電子旅遊書</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

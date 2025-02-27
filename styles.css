@@ -1,0 +1,697 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background-color: #f5f7fa;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: #2c3e50;
+}
+
+header {
+    background: linear-gradient(135deg, #00b4db, #0083b0);
+    color: white;
+    text-align: center;
+    padding: 2em 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">✈️</text></svg>') center/40px no-repeat;
+    opacity: 0.1;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+main {
+    flex: 1;
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+button {
+    background: linear-gradient(135deg, #00b4db, #0083b0);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(0,131,176,0.3);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,131,176,0.4);
+    background: linear-gradient(135deg, #00c2eb, #0095c7);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,131,176,0.3);
+}
+
+/* Form Styles */
+#plan-form {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+
+/* Photo Preview Styles */
+.plan-photo-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.plan-photo-preview img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.plan-photo-preview img:hover {
+    transform: scale(1.05);
+}
+
+#plan-photos {
+    margin: 10px 0;
+    padding: 10px;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#plan-photos:hover {
+    border-color: #00b4db;
+}
+
+#plan-form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+#plan-form input,
+#plan-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+#plan-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.info-controls {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.info-controls button {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+}
+
+/* Info Container Styles */
+#info-container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+
+#plan-list {
+    list-style: none;
+    padding: 0;
+}
+
+#plan-list li {
+    padding: 20px;
+    border-radius: 12px;
+    background: white;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#plan-list li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+#plan-list li:last-child {
+    margin-bottom: 0;
+}
+
+.plan-details {
+    flex: 1;
+}
+
+.plan-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.plan-header h3 {
+    margin: 0;
+    color: #0083b0;
+    font-size: 1.5rem;
+}
+
+.plan-destination {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #2c3e50;
+    font-size: 1.1rem;
+}
+
+.plan-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.plan-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.info-icon {
+    font-style: normal;
+    font-size: 1.5rem;
+}
+
+.info-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.info-content label {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.info-content span {
+    color: #2c3e50;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.plan-notes {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 2px solid #f0f0f0;
+}
+
+.notes-icon {
+    font-style: normal;
+    font-size: 1.5rem;
+}
+
+.notes-content {
+    flex: 1;
+}
+
+.notes-content label {
+    display: block;
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.notes-content p {
+    margin: 0;
+    color: #2c3e50;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.plan-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.plan-actions button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    margin: 5px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.plan-actions button:hover {
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
+}
+
+.delete-plan {
+    background: linear-gradient(135deg, #ff4444, #cc0000);
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.delete-plan:hover {
+    background: linear-gradient(135deg, #ff6666, #ff0000);
+}
+
+.delete-icon {
+    font-style: normal;
+}
+
+.empty-message {
+    text-align: center;
+    color: #666;
+    padding: 20px;
+    font-style: italic;
+}
+
+/* Plan Photos Styles */
+.plan-photos {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #f0f0f0;
+}
+
+.plan-photos h4 {
+    margin: 0 0 15px 0;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.photo-item {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.photo-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.photo-item img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+}
+
+.photo-item p {
+    margin: 0;
+    padding: 8px;
+    font-size: 0.85rem;
+    color: #666;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Form Photo Preview */
+.plan-photo-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    margin: 10px 0 20px 0;
+}
+
+.plan-photo-preview img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.plan-photo-preview img:hover {
+    transform: scale(1.05);
+}
+
+.photo-container p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    color: #666;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* Edit Plan Styles */
+#edit-plan {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+
+.edit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.edit-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-basic-info {
+    margin-bottom: 30px;
+}
+
+.edit-basic-info input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.edit-blog {
+    margin: 20px 0;
+}
+
+.editor-toolbar {
+    display: flex;
+    gap: 5px;
+    padding: 10px;
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+}
+
+.editor-toolbar button {
+    padding: 6px 12px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    transition: all 0.2s ease;
+}
+
+.editor-toolbar button:hover {
+    background: #e9ecef;
+    transform: translateY(-1px);
+}
+
+.editor-toolbar button.active {
+    background: #e9ecef;
+    border-color: #adb5bd;
+}
+
+.edit-content-area {
+    min-height: 200px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    overflow-y: auto;
+    font-family: inherit;
+    line-height: 1.6;
+}
+
+.edit-content-area:focus {
+    outline: none;
+    border-color: #00b4db;
+}
+
+.edit-content-area img {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+    border-radius: 8px;
+    float: left;
+    margin-right: 10px;
+}
+
+.edit-photos {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #f0f0f0;
+}
+
+.edit-photo-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.edit-photo-preview img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.edit-photo-preview img:hover {
+    transform: scale(1.05);
+}
+
+/* Insert Photos Styles */
+.edit-insert-photos {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #f0f0f0;
+}
+
+.insert-photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.insertable-photo {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.insertable-photo:hover {
+    transform: scale(1.1);
+}
+
+/* Animation */
+#plan-form, #info-container, #edit-plan {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background: #333;
+    color: white;
+    margin-top: auto;
+}
+
+/* 輸入框樣式 */
+input[type="text"],
+input[type="date"],
+input[type="number"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: inherit;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus,
+textarea:focus {
+    border-color: #00b4db;
+    outline: none;
+}
+
+/* 搜尋框樣式 */
+.search-container {
+    margin: 20px 0;
+}
+
+#search-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* 響應式設計 */
+@media (max-width: 600px) {
+    /* 在小於600px的螢幕上，按鈕的大小和間距 */
+    button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+
+    /* 調整表單的輸入框 */
+    #plan-form input,
+    #plan-form textarea {
+        padding: 6px;
+    }
+
+    /* 調整計劃資訊的顯示 */
+    #plan-list li {
+        padding: 15px;
+    }
+
+    /* 調整照片預覽的大小 */
+    .plan-photo-preview img {
+        height: 80px; /* 調整高度 */
+    }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+    /* 在601px到900px之間的螢幕上 */
+    button {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+
+    /* 調整照片預覽的大小 */
+    .plan-photo-preview img {
+        height: 100px; /* 調整高度 */
+    }
+}
+
+/* 大螢幕的樣式 */
+@media (min-width: 901px) {
+    /* 在大於900px的螢幕上 */
+    button {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+
+    /* 調整照片預覽的大小 */
+    .plan-photo-preview img {
+        height: 150px; /* 調整高度 */
+    }
+}
+
+.tooltip {
+    display: none; /* 預設隱藏 */
+    position: absolute;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+    width: 250px; /* 調整寬度 */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+#edit-map:hover + .tooltip {
+    display: block; /* 當滑鼠懸停時顯示 */
+}
