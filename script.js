@@ -177,6 +177,17 @@ function initializeEventListeners() {
                         table.appendChild(tr);
                     }
                     document.getElementById('editor').appendChild(table);
+                } else if (command === 'createLink') {
+                    let url = prompt('請輸入連結網址:'); // 提示使用者輸入網址
+                    if (url) {
+                        // 自動加入 https:// 如果沒有指定協議
+                        if (!/^https?:\/\//i.test(url)) {
+                            url = 'https://' + url;
+                        }
+                        document.execCommand('createLink', false, url); // 插入連結
+                    } else {
+                        alert('請輸入有效的網址。'); // 提示使用者輸入有效網址
+                    }
                 } else if (command === 'toggleBorder') {
                     const selectedCells = window.getSelection().focusNode.parentElement; // 獲取選中的單元格
                     if (selectedCells.tagName === 'TD' || selectedCells.tagName === 'TH') {
@@ -545,6 +556,13 @@ function showViewPlan(plan) {
         </div>
         <button id="close-view">關閉</button>
     `;
+
+    // 將所有連結設置為在新視窗中打開
+    const links = viewContainer.querySelectorAll('a');
+    links.forEach(link => {
+        link.setAttribute('target', '_blank'); // 新視窗開啟
+    });
+
     showElement('view-plan-container');
 
     // 添加關閉按鈕事件
