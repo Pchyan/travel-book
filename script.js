@@ -48,6 +48,16 @@ function initializeEventListeners() {
         displayPlans();
     });
 
+    // 主題選擇器事件
+    const themeButtons = document.querySelectorAll('.theme-button');
+    themeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const theme = this.getAttribute('data-theme');
+            document.body.className = theme; // 更改主題
+            header.className = theme; // 更改標題顏色
+        });
+    });
+
     // 計劃表單照片預覽
     document.getElementById('plan-photos').addEventListener('change', function(e) {
         const photoPreview = document.querySelector('.plan-photo-preview');

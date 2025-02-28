@@ -695,3 +695,183 @@ textarea:focus {
 #edit-map:hover + .tooltip {
     display: block; /* 當滑鼠懸停時顯示 */
 }
+
+/* 基本樣式 */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: #007bff;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+}
+
+/* 按鈕樣式 */
+.button-container button,
+.edit-controls button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button-container button:hover,
+.edit-controls button:hover {
+    background-color: #0056b3;
+}
+
+/* 表單樣式 */
+form {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* 計劃列表樣式 */
+#plan-list {
+    list-style: none;
+    padding: 0;
+}
+
+#plan-list li {
+    background: white;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.plan-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.plan-actions button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.plan-actions button:hover {
+    background-color: #218838;
+}
+
+/* 編輯器樣式 */
+.edit-content-area {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    min-height: 200px;
+    background: #fff;
+}
+
+/* 響應式樣式 */
+@media (max-width: 600px) {
+    .button-container button,
+    .edit-controls button {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+
+/* 預設主題 */
+body.default {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header.default {
+    background: #007bff;
+}
+
+/* 紅色主題 */
+body.red {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+header.red {
+    background: #dc3545;
+}
+
+/* 橙色主題 */
+body.orange {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+header.orange {
+    background: #fd7e14;
+}
+
+/* 綠色主題 */
+body.green {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+header.green {
+    background: #28a745;
+}
+
+/* 藍色主題 */
+body.blue {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+header.blue {
+    background: #007bff;
+}
+
+/* 紫色主題 */
+body.purple {
+    background-color: #e2d3f0;
+    color: #4b2e8c;
+}
+
+header.purple {
+    background: #6f42c1;
+}
+
+/* 粉色主題 */
+body.pink {
+    background-color: #f8d7e1;
+    color: #721c24;
+}
+
+header.pink {
+    background: #e83e8c;
+}
