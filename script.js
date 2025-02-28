@@ -37,11 +37,13 @@ function initializeEventListeners() {
     // 主要按鈕事件
     document.getElementById('create-plan').addEventListener('click', function() {
         console.log('點擊建立計劃按鈕');
+        hideElement('view-plan-container'); // 隱藏瀏覽模式
         showElement('plan-form');
     });
 
     document.getElementById('view-info').addEventListener('click', function() {
         console.log('點擊查看資訊按鈕');
+        hideElement('view-plan-container'); // 隱藏瀏覽模式
         showElement('info-container');
         displayPlans();
     });
@@ -99,13 +101,13 @@ function initializeEventListeners() {
         }
 
         if (editingIndex > -1) {
-            plans[editingIndex] = planData;
-            editingIndex = -1;
+            plans[editingIndex] = planData; // 更新現有計劃
+            editingIndex = -1; // 重置編輯索引
         } else {
-            plans.push(planData);
+            plans.push(planData); // 新增計劃
         }
         
-        savePlansToLocalStorage();
+        savePlansToLocalStorage(); // 儲存到本地存儲
         
         // 清空表單
         document.getElementById('plan-name').value = '';
@@ -119,7 +121,7 @@ function initializeEventListeners() {
         
         // 切換回旅遊計劃資訊
         showElement('info-container');
-        displayPlans();
+        displayPlans(); // 更新顯示計劃
     });
 
     // 取消按鈕
@@ -142,14 +144,48 @@ function initializeEventListeners() {
             if (e.target.tagName === 'BUTTON') {
                 const command = e.target.dataset.command;
                 if (command === 'insertImage') {
-                    const url = prompt('輸入圖片網址:');
-                    if (url) {
-                        document.execCommand('insertImage', false, url);
+                    const input = document.createElement('input');
+                    input.type = 'file';
+                    input.accept = 'image/*';
+                    input.onchange = function(event) {
+                        const file = event.target.files[0];
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const img = document.createElement('img');
+                            img.src = e.target.result;
+                            img.style.maxWidth = '100%'; // 設定圖片最大寬度
+                            img.style.height = prompt('請輸入圖片高度（例如：200px）', '200px') || 'auto'; // 讓用戶輸入高度
+                            document.getElementById('editor').appendChild(img);
+                        };
+                        reader.readAsDataURL(file);
+                    };
+                    input.click(); // 自動觸發檔案選擇對話框
+                } else if (command === 'insertTable') {
+                    const rows = parseInt(prompt('請輸入表格行數', '2'), 10) || 2;
+                    const cols = parseInt(prompt('請輸入表格列數', '2'), 10) || 2;
+                    const table = document.createElement('table');
+                    table.style.borderCollapse = 'collapse'; // 無邊框
+                    for (let i = 0; i < rows; i++) {
+                        const tr = document.createElement('tr');
+                        for (let j = 0; j < cols; j++) {
+                            const td = document.createElement('td');
+                            td.style.border = '1px solid transparent'; // 無邊框
+                            td.style.padding = '8px';
+                            td.textContent = (i * cols + j + 1).toString(); // 填入序號
+                            tr.appendChild(td);
+                        }
+                        table.appendChild(tr);
                     }
-                } else if (command === 'createLink') {
-                    const url = prompt('輸入連結網址:');
-                    if (url) {
-                        document.execCommand('createLink', false, url);
+                    document.getElementById('editor').appendChild(table);
+                } else if (command === 'toggleBorder') {
+                    const selectedCells = window.getSelection().focusNode.parentElement; // 獲取選中的單元格
+                    if (selectedCells.tagName === 'TD' || selectedCells.tagName === 'TH') {
+                        // 切換框線樣式
+                        if (selectedCells.style.border === '1px solid black') {
+                            selectedCells.style.border = 'none'; // 移除框線
+                        } else {
+                            selectedCells.style.border = '1px solid black'; // 添加框線
+                        }
                     }
                 } else {
                     document.execCommand(command, false, null);
@@ -198,25 +234,6 @@ function initializeEventListeners() {
     document.getElementById('cancel-edit').addEventListener('click', function() {
         showElement('info-container');
         displayPlans();
-    });
-
-    // 添加檔案選擇器的事件監聽器
-    document.getElementById('edit-photos').addEventListener('change', function(e) {
-        const files = e.target.files;
-        const editor = document.getElementById('editor');
-
-        Array.from(files).forEach(file => {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const img = document.createElement('img');
-                img.src = event.target.result;
-                img.style.maxWidth = '100%'; // 確保圖片不超過編輯區域
-                img.style.float = 'left'; // 使圖片浮動到左側
-                img.style.marginRight = '10px'; // 右側留出空間
-                editor.appendChild(img); // 將圖片插入編輯器
-            };
-            reader.readAsDataURL(file);
-        });
     });
 
     // 依日期排序
@@ -489,18 +506,6 @@ function displayPlans(searchTerm = '', sortedPlans = plans) {
             document.getElementById('editor').innerHTML = plan.notes || '<p>開始寫下您的旅遊記事...</p>';
             document.getElementById('edit-map').value = plan.map || '';
 
-            // 顯示計劃照片
-            const insertPhotoGrid = document.querySelector('.insert-photo-grid');
-            insertPhotoGrid.innerHTML = '';
-            plan.photos.forEach(photo => {
-                const img = document.createElement('img');
-                img.src = photo.src;
-                img.alt = photo.name;
-                img.dataset.src = photo.src;
-                img.className = 'insertable-photo';
-                insertPhotoGrid.appendChild(img);
-            });
-
             showElement('edit-plan');
         });
     });
@@ -515,10 +520,6 @@ function showViewPlan(plan) {
         <p><strong>出發日期:</strong> ${formatDate(plan.date)}</p>
         <p><strong>旅程天數:</strong> ${plan.duration} 天</p>
         <p><strong>預算:</strong> ${formatCurrency(plan.budget)}</p>
-        <div class="plan-notes">
-            <h4>備註:</h4>
-            <p>${plan.notes || '無備註'}</p>
-        </div>
         ${plan.map ? `
             <div class="plan-map">
                 <h4>🗺️ 地圖位置</h4>
@@ -538,6 +539,10 @@ function showViewPlan(plan) {
                 </div>
             </div>
         ` : ''}
+        <div class="plan-content">
+            <h4>旅遊記事:</h4>
+            <div class="editor-content">${plan.notes || '無備註'}</div>
+        </div>
         <button id="close-view">關閉</button>
     `;
     showElement('view-plan-container');
@@ -550,9 +555,7 @@ function showViewPlan(plan) {
 
 // 本地存儲功能
 function savePlansToLocalStorage() {
-    localStorage.setItem('travelPlans', JSON.stringify(plans, function(key, value) {
-        return value;
-    }));
+    localStorage.setItem('travelPlans', JSON.stringify(plans));
 }
 
 function loadPlansFromLocalStorage() {
